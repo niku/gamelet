@@ -17,6 +17,8 @@ import Dict exposing (Dict)
 
 type alias Flags =
     { userToken : String
+    , protocol : String
+    , host : String
     }
 
 
@@ -32,20 +34,27 @@ type alias Model =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { phxSocket =
-            Phoenix.Socket.init ("ws://localhost:4000/socket/websocket?user_token=" ++ flags.userToken)
-                |> Phoenix.Socket.withDebug
-                |> Phoenix.Socket.on "shout" "room:lobby" ReceiveMessage
-                |> Phoenix.Socket.on "presence_state" "room:lobby" HandlePresenceState
-                |> Phoenix.Socket.on "presence_diff" "room:lobby" HandlePresenceDiff
-      , phxPresences = Dict.empty
-      , users = []
-      , userId = ""
-      , content = ""
-      , userToken = flags.userToken
-      }
-    , Cmd.none
-    )
+    let
+        schema =
+            if flags.protocol == "https:" then
+                "wss"
+            else
+                "ws"
+    in
+        ( { phxSocket =
+                Phoenix.Socket.init (schema ++ "://" ++ flags.host ++ "/socket/websocket?user_token=" ++ flags.userToken)
+                    |> Phoenix.Socket.withDebug
+                    |> Phoenix.Socket.on "shout" "room:lobby" ReceiveMessage
+                    |> Phoenix.Socket.on "presence_state" "room:lobby" HandlePresenceState
+                    |> Phoenix.Socket.on "presence_diff" "room:lobby" HandlePresenceDiff
+          , phxPresences = Dict.empty
+          , users = []
+          , userId = ""
+          , content = ""
+          , userToken = flags.userToken
+          }
+        , Cmd.none
+        )
 
 
 type alias User =
