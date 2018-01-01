@@ -1,4 +1,4 @@
-defmodule Nigiwiki.DataCase do
+defmodule Gamelet.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule Nigiwiki.DataCase do
 
   using do
     quote do
-      alias Nigiwiki.Repo
+      alias Gamelet.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Nigiwiki.DataCase
+      import Gamelet.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nigiwiki.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Gamelet.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Nigiwiki.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Gamelet.Repo, {:shared, self()})
     end
 
     :ok

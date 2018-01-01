@@ -1,4 +1,4 @@
-# Nigiwiki
+# Gamelet
 
 To start your Phoenix server:
 

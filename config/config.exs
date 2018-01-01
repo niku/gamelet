@@ -6,16 +6,16 @@
 use Mix.Config
 
 # General application configuration
-config :nigiwiki,
-  ecto_repos: [Nigiwiki.Repo],
+config :gamelet,
+  ecto_repos: [Gamelet.Repo],
   generators: [binary_id: true]
 
 # Configures the endpoint
-config :nigiwiki, NigiwikiWeb.Endpoint,
+config :gamelet, GameletWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "k9KJsSQlIJr/E1trqW6k1VPvSx+5L7/7O7+hXa9ckmCsFnTnvtYbB+HasoXpxMZs",
-  render_errors: [view: NigiwikiWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Nigiwiki.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: GameletWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Gamelet.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,

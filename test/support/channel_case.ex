@@ -1,4 +1,4 @@
-defmodule NigiwikiWeb.ChannelCase do
+defmodule GameletWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule NigiwikiWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint NigiwikiWeb.Endpoint
+      @endpoint GameletWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nigiwiki.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Gamelet.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Nigiwiki.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Gamelet.Repo, {:shared, self()})
     end
 
     :ok

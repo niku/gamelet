@@ -1,9 +1,9 @@
-defmodule Nigiwiki.Mixfile do
+defmodule Gamelet.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :nigiwiki,
+      app: :gamelet,
       version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -22,7 +22,7 @@ defmodule Nigiwiki.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Nigiwiki.Application, []},
+      mod: {Gamelet.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -80,7 +80,7 @@ defmodule Nigiwiki.Mixfile do
     [
       maintainers: ["niku"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/niku/nigiwiki"}
+      links: %{"GitHub" => "https://github.com/niku/gamelet"}
     ]
   end
 end
