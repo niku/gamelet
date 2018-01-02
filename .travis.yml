@@ -12,13 +12,6 @@ cache:
   directories:
     - _build
     - deps
-before_install:
-  # https://docs.travis-ci.com/user/encrypting-files/
-  # Decrypt the file about configuration(auth and so on) of hex.pm
-  - mkdir -p ~/.hex/
-  # You need execution command `travis encrypt-file ~/.hex/hex.config` in the repository and adding generated line following like:
-  # - openssl aes-256-cbc -K $encrypted_36030c2fae51_key -iv $encrypted_36030c2fae51_iv -in hex.config.enc -out ~/.hex/hex.config -d
-  - openssl aes-256-cbc -K $encrypted_0303a15e1424_key -iv $encrypted_0303a15e1424_iv -in hex.config.enc -out ~/.hex/hex.config -d
 script:
   - MIX_ENV=test mix test
   # You need to compile following the line at first in the development environment (MIX_ENV=dev)
@@ -29,15 +22,8 @@ script:
   # > exit immediately with same exit status as dialyzer. useful for CI
   - mix dialyzer --halt-exit-status
 deploy:
-   # https://docs.travis-ci.com/user/deployment/script/
-   # > `script` must be a scalar pointing to an executable file or command.
-   provider: script
-   # http://yaml.org/spec/1.2/spec.html#id2779048
-   # `>-` indicates the line folding.
-   script: >-
-     mix deps.get &&
-     $HEX_PASSPHRASE mix hex.publish --confirm &&
-     mix clean &&
-     mix deps.clean --all
-   on:
-    tags: true
+  provider: heroku
+  api_key:
+    # travis encrypt $(heroku auth:token) --add deploy.api_key
+    secure: Hpki82sDWcB6wWl9LqLplwOgHxoSMA3XnhBYkF7oB3YE9xBOzEU+1d5Dncnid8g3hy+TPJutWtkg59Ivx5Raw3LkZQOJl0kIcC4JBfgS26oFDLcZdxX/+ampSnzq1c8NXt7lUfJ/G1tTrFJ4wU0uPhbCG+V94glVtw5dLp3/MZjrcn0FhFkeiPr34T2hh6A1Z/RVfcAA6qQL6+8zXMH1u2ewndCMKj8TVilG2lTr7KYPHV+3IsDNej8JeUQ+EdjKbMjlI+url2zC7cRba8e+mIRVQQ+QzTR4xAVZviAcfhxDO25D3q6Qw985Sulx6Xa72s/e/FnZKAYsGGk/ukBsN3L1q82AyWkqDVH81oF452lg+3VxP31YBlBkKMgdRJ2VYNhHUhPlJotO0Sjkno7yz8fFEbfbt5/6rAq0bbGNOnsTvhpAVj/b6QrwOzsHPL48dHg8APqhp/2LxYUO6/ofpfHQCrbIMgsk0q3JGW7PxIkZn4zKTOlnfRdJ2C3/SBDzMvLwLYNcscisu2iu+/jIDHjeizOMAur3e31XQCwJknlDOsloJwtukltXn3tuB6TcvkZugP2VUct8dnb4qkO7w4hUZBp1Mpj1kkm7rqZ5qgTlWe1hw/qmex9ukW5zWFD/nMA3XNbyFoL89+LnQu+VFCd20ekGrUWlYujN/cTU+fU=
+  on: master
